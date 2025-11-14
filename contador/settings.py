@@ -115,3 +115,24 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Desabilitar logs do servidor de desenvolvimento
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'null': {
+            'class': 'logging.NullHandler',
+        },
+    },
+    'loggers': {
+        'django.server': {
+            'handlers': ['null'],
+            'level': 'ERROR',
+        },
+        'django.request': {
+            'handlers': ['null'],
+            'level': 'ERROR',
+        },
+    },
+}
+
