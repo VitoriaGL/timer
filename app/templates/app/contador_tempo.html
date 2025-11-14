@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Courier New', monospace;
+            background: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            text-align: center;
+        }
+        .timer-display {
+            font-size: 120px;
+            font-weight: normal;
+            color: #000;
+            margin: 40px 0;
+        }
+        button {
+            padding: 10px 30px;
+            font-size: 16px;
+            border: 1px solid #000;
+            background: #fff;
+            color: #000;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            margin: 0 10px;
+        }
+        button:hover {
+            background: #000;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="timer-display" id="timerDisplay">10</div>
+        <div>
+            <button onclick="iniciar()">Iniciar</button>
+            <button onclick="resetar()">Resetar</button>
+        </div>
+    </div>
+
+    <script>
+        let intervaloAtualizacao = null;
+
+        async function atualizarTimer() {
+            try {
+                const response = await fetch('/timer/status/');
+                const data = await response.json();
+                
+                document.getElementById('timerDisplay').textContent = data.segundos;
+                
+                if (data.finalizado) {
+                    clearInterval(intervaloAtualizacao);
+                    intervaloAtualizacao = null;
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+            }
+        }
+
+        async function iniciar() {
+            try {
+                await fetch('/timer/iniciar/', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken'),
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!intervaloAtualizacao) {
+                    intervaloAtualizacao = setInterval(atualizarTimer, 100);
+                }
+                atualizarTimer();
+            } catch (error) {
+                console.error('Erro:', error);
+            }
+        }
+
+        async function resetar() {
+            try {
+                await fetch('/timer/resetar/', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken'),
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (intervaloAtualizacao) {
+                    clearInterval(intervaloAtualizacao);
+                    intervaloAtualizacao = null;
+                }
+                atualizarTimer();
+            } catch (error) {
+                console.error('Erro:', error);
+            }
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        window.addEventListener('load', () => {
+            atualizarTimer();
+            intervaloAtualizacao = setInterval(atualizarTimer, 100);
+        });
+    </script>
+</body>
+</html>
