@@ -14,7 +14,7 @@ Este é um projeto Django que demonstra o uso de views assíncronas (async views
 - Python 3.8 ou superior
 - pip (gerenciador de pacotes Python)
 
-## 🔧 Instalação
+##  Instalação
 
 1. Clone ou navegue até o diretório do projeto:
 ```bash
@@ -64,7 +64,7 @@ python manage.py runserver
 
 O servidor estará disponível em: `http://127.0.0.1:8000/`
 
-## 📡 Endpoints da API
+## Endpoints da API
 
 ### GET `/`
 Retorna uma mensagem de boas-vindas em JSON.
