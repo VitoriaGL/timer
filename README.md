@@ -2,14 +2,14 @@
 
 Este é um projeto Django que demonstra o uso de views assíncronas (async views) introduzidas no Django 3.1+ e melhoradas nas versões mais recentes.
 
-## 🚀 Características
+## Características
 
 - **Views Assíncronas**: Exemplos de funções e class-based views assíncronas
 - **ORM Assíncrono**: Uso do Django ORM assíncrono (Django 4.1+)
 - **Operações de Banco de Dados**: CRUD completo com operações assíncronas
 - **API REST**: Endpoints JSON para gerenciamento de contadores
 
-## 📋 Pré-requisitos
+## Pré-requisitos
 
 - Python 3.8 ou superior
 - pip (gerenciador de pacotes Python)
@@ -55,7 +55,7 @@ python manage.py migrate
 python manage.py createsuperuser
 ```
 
-## 🏃 Executando o Projeto
+## Executando o Projeto
 
 Inicie o servidor de desenvolvimento:
 ```bash
@@ -126,7 +126,7 @@ Retorna estatísticas sobre os contadores (total, soma dos valores, maior contad
 ### GET `/operacao-demorada/`
 Simula uma operação assíncrona que demora 2 segundos.
 
-## 🧪 Testando os Endpoints
+##  Testando os Endpoints
 
 ### Usando curl:
 
@@ -166,7 +166,7 @@ response = requests.get('http://127.0.0.1:8000/contadores/')
 print(response.json())
 ```
 
-## 📚 Conceitos de Views Assíncronas
+##  Conceitos de Views Assíncronas
 
 ### Views Assíncronas com Funções
 
@@ -208,7 +208,7 @@ async for contador in Contador.objects.all():
     print(contador.nome)
 ```
 
-## 🗄️ Modelo de Dados
+## Modelo de Dados
 
 O projeto inclui um modelo `Contador` com os seguintes campos:
 - `nome`: Nome do contador (CharField)
@@ -216,26 +216,22 @@ O projeto inclui um modelo `Contador` com os seguintes campos:
 - `criado_em`: Data de criação (DateTimeField, auto)
 - `atualizado_em`: Data de atualização (DateTimeField, auto)
 
-## 🔐 Admin do Django
+## Admin do Django
 
 Acesse o painel administrativo em: `http://127.0.0.1:8000/admin/`
 
 Use as credenciais do superusuário criado anteriormente.
 
-## 📝 Notas Importantes
+##  Notas Importantes
 
 - Views assíncronas funcionam melhor com servidores ASGI (como Daphne ou Uvicorn)
 - Para produção, considere usar um servidor ASGI em vez do servidor de desenvolvimento padrão
 - O ORM assíncrono está disponível desde o Django 4.1
 - Algumas operações do ORM ainda não são totalmente assíncronas
 
-## 🛠️ Tecnologias Utilizadas
+## nTecnologias Utilizadas
 
 - Django 5.0+
 - Python 3.8+
 - SQLite (banco de dados padrão)
-
-## 📄 Licença
-
-Este projeto é um exemplo educacional.
 
